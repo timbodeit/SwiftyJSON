@@ -404,7 +404,7 @@ extension JSON : Collection, Sequence, Indexable {
     public subscript (position: JSON.Index) -> Generator.Element {
         switch self.type {
         case .Array:
-            return (String(position.arrayIndex), JSON(self.rawArray[position.arrayIndex!]))
+            return (String(position.arrayIndex!), JSON(self.rawArray[position.arrayIndex!]))
         case .Dictionary:
             let (key, value) = self.rawDictionary[position.dictionaryIndex!]
             return (key, JSON(value))
