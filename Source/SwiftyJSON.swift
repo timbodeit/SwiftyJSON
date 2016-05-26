@@ -121,7 +121,11 @@ public struct JSON {
     - returns: The created JSON
     */
     public init(_ jsonArray:[JSON]) {
+#if os(Linux)
+        self.init(jsonArray.map { $0.object })
+#else
         self.init(jsonArray.map { $0.object } as AnyObject)
+#endif
     }
 
     /**
@@ -140,7 +144,11 @@ public struct JSON {
         for (key, json) in jsonDictionary {
             dictionary[key] = json.object
         }
+#if os(Linux)
+        self.init(dictionary)
+#else
         self.init(dictionary as AnyObject)
+#endif
     }
 
     /// Private object
@@ -195,7 +203,13 @@ public struct JSON {
                 case .String:
                     self.rawString = value as! String
                 case .Unknown:
-                    _error = NSError(domain: ErrorDomain, code: ErrorUnsupportedType, userInfo: [NSLocalizedDescriptionKey: "It is a unsupported type"])
+#if os(Linux)
+                    let userInfo: [String: Any]
+#else
+                    let userInfo: [String: String]
+#endif
+                    userInfo = [NSLocalizedDescriptionKey: "It is a unsupported type"]
+                    _error = NSError(domain: ErrorDomain, code: ErrorUnsupportedType, userInfo: userInfo)
                     print("==> error=\(_error). type=\(newValue.dynamicType)")
             }
         }
@@ -329,7 +343,13 @@ public struct JSON {
                 self.rawDictionary = dictionary
             default:
                 _type = .Unknown
-                _error = NSError(domain: ErrorDomain, code: ErrorUnsupportedType, userInfo: [NSLocalizedDescriptionKey as NSObject: "It is a unsupported type"])
+#if os(Linux)
+                let userInfo: [String: Any]
+#else
+                let userInfo: [String: String]
+#endif
+                userInfo = [NSLocalizedDescriptionKey: "It is a unsupported type"]
+                _error = NSError(domain: ErrorDomain, code: ErrorUnsupportedType, userInfo: userInfo)
             }
         }
     }
@@ -635,13 +655,25 @@ extension JSON {
         get {
             if self.type != .Array {
                 var r = JSON.null
-                r._error = self._error ?? NSError(domain: ErrorDomain, code: ErrorWrongType, userInfo: [NSLocalizedDescriptionKey as AnyObject as! NSObject: "Array[\(index)] failure, It is not an array" as AnyObject])
+#if os(Linux)
+                let userInfo: [String: Any]
+#else
+                let userInfo: [String: String]
+#endif
+                userInfo = [NSLocalizedDescriptionKey: "Array[\(index)] failure, It is not an array"]
+                r._error = self._error ?? NSError(domain: ErrorDomain, code: ErrorWrongType, userInfo: userInfo)
                 return r
             } else if index >= 0 && index < self.rawArray.count {
                 return JSON(self.rawArray[index])
             } else {
                 var r = JSON.null
-                r._error = NSError(domain: ErrorDomain, code:ErrorIndexOutOfBounds , userInfo: [NSLocalizedDescriptionKey as AnyObject as! NSObject: "Array[\(index)] is out of bounds" as AnyObject])
+#if os(Linux)
+                let userInfo: [String: Any]
+#else
+                let userInfo: [String: String]
+#endif
+                userInfo = [NSLocalizedDescriptionKey: "Array[\(index)] is out of bounds"]
+                r._error = NSError(domain: ErrorDomain, code:ErrorIndexOutOfBounds , userInfo: userInfo)
                 return r
             }
         }
@@ -662,10 +694,22 @@ extension JSON {
                 if let o = self.rawDictionary[key] {
                     r = JSON(o)
                 } else {
-                    r._error = NSError(domain: ErrorDomain, code: ErrorNotExist, userInfo: [NSLocalizedDescriptionKey as NSObject: "Dictionary[\"\(key)\"] does not exist" as AnyObject])
+#if os(Linux)
+                    let userInfo: [String: Any]
+#else
+                    let userInfo: [String: String]
+#endif
+                    userInfo = [NSLocalizedDescriptionKey: "Dictionary[\"\(key)\"] does not exist"]
+                    r._error = NSError(domain: ErrorDomain, code: ErrorNotExist, userInfo: userInfo)
                 }
             } else {
-                r._error = self._error ?? NSError(domain: ErrorDomain, code: ErrorWrongType, userInfo: [NSLocalizedDescriptionKey as NSObject: "Dictionary[\"\(key)\"] failure, It is not an dictionary" as AnyObject])
+#if os(Linux)
+                let userInfo: [String: Any]
+#else
+                let userInfo: [String: String]
+#endif
+                userInfo = [NSLocalizedDescriptionKey: "Dictionary[\"\(key)\"] failure, It is not an dictionary"]
+                r._error = self._error ?? NSError(domain: ErrorDomain, code: ErrorWrongType, userInfo: userInfo)
             }
             return r
         }
@@ -750,54 +794,90 @@ extension JSON {
 extension JSON: Swift.StringLiteralConvertible {
 
     public init(stringLiteral value: StringLiteralType) {
+#if os(Linux)
+        self.init(value)
+#else
         self.init(value as AnyObject)
+#endif
     }
 
     public init(extendedGraphemeClusterLiteral value: StringLiteralType) {
+#if os(Linux)
+        self.init(value)
+#else
         self.init(value as AnyObject)
+#endif
     }
 
     public init(unicodeScalarLiteral value: StringLiteralType) {
+#if os(Linux)
+        self.init(value)
+#else
         self.init(value as AnyObject)
+#endif
     }
 }
 
 extension JSON: Swift.IntegerLiteralConvertible {
 
     public init(integerLiteral value: IntegerLiteralType) {
+#if os(Linux)
+        self.init(value)
+#else
         self.init(value as AnyObject)
+#endif
     }
 }
 
 extension JSON: Swift.BooleanLiteralConvertible {
 
     public init(booleanLiteral value: BooleanLiteralType) {
+#if os(Linux)
+        self.init(value)
+#else
         self.init(value as AnyObject)
+#endif
     }
 }
 
 extension JSON: Swift.FloatLiteralConvertible {
 
     public init(floatLiteral value: FloatLiteralType) {
+#if os(Linux)
+        self.init(value)
+#else
         self.init(value as AnyObject)
+#endif
     }
 }
 
 extension JSON: Swift.DictionaryLiteralConvertible {
 
     public init(dictionaryLiteral elements: (String, AnyObject)...) {
+#if os(Linux)
+        self.init(elements.reduce([String : AnyObject](minimumCapacity: elements.count)){(dictionary: [String : AnyObject], element:(String, AnyObject)) -> [String : AnyObject] in
+            var d = dictionary
+            d[element.0] = element.1
+            return d
+            })
+#else
         self.init(elements.reduce([String : AnyObject](minimumCapacity: elements.count)){(dictionary: [String : AnyObject], element:(String, AnyObject)) -> [String : AnyObject] in
             var d = dictionary
             d[element.0] = element.1
             return d
             } as AnyObject)
+#endif
     }
 }
 
 extension JSON: Swift.ArrayLiteralConvertible {
 
     public init(arrayLiteral elements: AnyObject...) {
+#if os(Linux)
+        self.init(elements)
+#else
         self.init(elements as AnyObject)
+#endif
     }
 }
 
