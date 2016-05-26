@@ -2,5 +2,5 @@
 
 set -e
 
-docker pull ibmcom/swift-ubuntu:latest
+docker build -
 docker run --rm ibmcom/swift-ubuntu:latest "ls -l"
