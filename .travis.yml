@@ -1,8 +1,15 @@
-language: objective-c
-osx_image: xcode7.3
-
 notifications:
   email: false
 
+matrix:
+  include:
+    - os: linux
+      services: docker
+      sudo: required
+    - os: osx
+      osx_image: xcode7.3
+      sudo: required
+
 script:
-  - source scripts/test_swiftyjson_osx.sh
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source scripts/test_swiftyjson_osx.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source scripts/build_docker_container.sh; fi

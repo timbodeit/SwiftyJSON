@@ -35,14 +35,20 @@ class RawRepresentableTests: XCTestCase {
         XCTAssertTrue(json.float! == 948394394.347384)
         XCTAssertTrue(json.floatValue == 948394394.347384)
 
-
+#if os(Linux)
+        let object: Any = json.rawValue
+//        XCTAssertEqual(Int(object), 948394394)
+//        XCTAssertEqual(Double(object), 948394394.347384)
+//        XCTAssertTrue(Float(object) == 948394394.347384)
+#else
         let object: AnyObject = json.rawValue
-         XCTAssertEqual(object as? Int, 948394394)
-         XCTAssertEqual(object as? Double, 948394394.347384)
-         XCTAssertTrue(object as! Float == 948394394.347384)
+        XCTAssertEqual(object as? Int, 948394394)
+        XCTAssertEqual(object as? Double, 948394394.347384)
+        XCTAssertTrue(object as! Float == 948394394.347384)
+#endif
         XCTAssertEqual(object as? NSNumber, 948394394.347384)
     }
-    
+
     func testBool() {
         var jsonTrue:JSON = JSON(rawValue: true as NSNumber)!
         print(jsonTrue.type, jsonTrue, jsonTrue.bool)
@@ -81,7 +87,8 @@ class RawRepresentableTests: XCTestCase {
             XCTFail("Should not run into here")
         }
 
-        let object: AnyObject = JSON(rawValue: string as AnyObject)!.rawValue
+
+        let object = JSON(rawValue: string as AnyObject)!.rawValue
         XCTAssertEqual(object as? String, string)
     }
     
@@ -92,21 +99,53 @@ class RawRepresentableTests: XCTestCase {
     }
     
     func testArray() {
-        let array = [1, 2, "3", 4102, "5632", "abocde", "!@# $%^&*()"] as NSArray
+#if os(Linux)
+        let array: [Any]
+#else
+        let array: NSArray
+#endif
+        array = [1, 2, "3", 4102, "5632", "abocde", "!@# $%^&*()"]
         if let json:JSON = JSON(rawValue: array) {
             XCTAssertEqual(json, JSON(array))
         }
+#if os(Linux)
+        let object: Any = JSON(rawValue: array)!.rawValue
+        XCTAssertTrue(array.bridge() == object as! NSArray)
+#else
         let object: AnyObject = JSON(rawValue: array)!.rawValue
         XCTAssertTrue(array == object as! NSArray)
+#endif
     }
     
     func testDictionary() {
-        let dictionary = ["1":2,"2":2,"three":3,"list":["aa","bb","dd"]] as NSDictionary
+#if os(Linux)
+        let dictionary: [String: Any]
+#else
+        let dictionary: NSDictionary
+#endif
+        dictionary = ["1": 2,"2": 2,"three": 3,"list": ["aa", "bb", "dd"]]
         if let json:JSON = JSON(rawValue: dictionary) {
             XCTAssertEqual(json, JSON(dictionary))
         }
 
+#if os(Linux)
+        let object: Any = JSON(rawValue: dictionary)!.rawValue
+        XCTAssertTrue(dictionary.bridge() == object as! NSDictionary)
+#else
         let object: AnyObject = JSON(rawValue: dictionary)!.rawValue
         XCTAssertTrue(dictionary == object as! NSDictionary)
+#endif
+    }
+}
+
+extension RawRepresentableTests {
+
+    static var allTests: [(String, (RawRepresentableTests) -> () throws -> Void)] {
+        return [("testNumber", testNumber),
+                ("testBool", testBool),
+                ("testString", testString),
+                ("testNil", testNil),
+                ("testArray", testArray),
+                ("testDictionary", testDictionary)]
     }
 }
