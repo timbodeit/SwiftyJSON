@@ -2,9 +2,7 @@
 
 set -e
 
-brew update
-brew install wget || brew outdated wget || brew upgrade wget
-
+# install xcpetty
 gem install xcpretty
 
 # install swift binaries
