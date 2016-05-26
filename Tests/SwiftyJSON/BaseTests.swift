@@ -30,7 +30,7 @@ class BaseTests: XCTestCase {
     override func setUp() {
         
         super.setUp()
-        
+
         if let file = NSBundle(for: BaseTests.self).pathForResource("Tests", ofType: "json") {
             self.testData = NSData(contentsOfFile: file)
         } else {
@@ -198,20 +198,21 @@ class BaseTests: XCTestCase {
         XCTAssertEqual(JSON(-999999999999999999999999.000000000000000000000001).description,"-1e+24")
         XCTAssertEqual(JSON(-9999999991999999999999999.88888883433343439438493483483943948341).stringValue,"-9.999999991999999e+24")
 
-        XCTAssertEqual(JSON(Int(Int.max)).description,"\(Int.max)")
+        XCTAssertEqual(JSON(NSNumber(value: Int.max)).description,"\(Int.max)")
         XCTAssertEqual(JSON(NSNumber(value: Int.min)).description,"\(Int.min)")
         XCTAssertEqual(JSON(NSNumber(value: UInt.max)).description,"\(UInt.max)")
         XCTAssertEqual(JSON(NSNumber(value: UInt64.max)).description,"\(UInt64.max)")
         XCTAssertEqual(JSON(NSNumber(value: Int64.max)).description,"\(Int64.max)")
         XCTAssertEqual(JSON(NSNumber(value: UInt64.max)).description,"\(UInt64.max)")
 
-        XCTAssertEqual(JSON(Double.infinity).description,"inf")
-        XCTAssertEqual(JSON(-Double.infinity).description,"-inf")
-        XCTAssertEqual(JSON(Double.nan).description,"nan")
+
+        XCTAssertEqual(JSON(Double.infinity as AnyObject).description,"inf")
+        XCTAssertEqual(JSON(-Double.infinity as AnyObject).description,"-inf")
+        XCTAssertEqual(JSON(Double.nan as AnyObject).description,"nan")
         
-        XCTAssertEqual(JSON(1.0/0.0).description,"inf")
-        XCTAssertEqual(JSON(-1.0/0.0).description,"-inf")
-        XCTAssertEqual(JSON(0.0/0.0).description,"nan")
+        XCTAssertEqual(JSON(1.0/0.0 as AnyObject).description,"inf")
+        XCTAssertEqual(JSON(-1.0/0.0 as AnyObject).description,"-inf")
+        XCTAssertEqual(JSON(0.0/0.0 as AnyObject).description,"nan")
     }
     
     func testNullJSON() {
@@ -228,7 +229,7 @@ class BaseTests: XCTestCase {
     
     func testExistance() {
         let dictionary = ["number":1111]
-        let json = JSON(dictionary)
+        let json = JSON(dictionary as AnyObject)
         XCTAssertFalse(json["unspecifiedValue"].exists())
         XCTAssertTrue(json["number"].exists())
     }

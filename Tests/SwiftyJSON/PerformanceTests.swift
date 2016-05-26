@@ -29,7 +29,7 @@ class PerformanceTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
+
         if let file = NSBundle(for: PerformanceTests.self).pathForResource("Tests", ofType: "json") {
             self.testData = NSData(contentsOfFile: file)
         } else {

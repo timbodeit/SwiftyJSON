@@ -1,18 +1,7 @@
 language: objective-c
 
-notifications:
-  email: false
+osx_image: xcode7.1
+xcode_sdk: iphonesimulator9.0
 
-matrix:
-  include:
-    - os: linux
-      services: docker
-    - os: osx
-      services: xcode7.3
+script: 'sh scripts/ci.sh'
 
-install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then gem install xcpretty; fi
-
-script:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./scripts/test_swiftyjson_osx.sh; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && then ./scripts/test_swiftyjson_linux.sh; fi
