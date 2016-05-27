@@ -1,7 +1,15 @@
-language: objective-c
+notifications:
+  email: false
 
-osx_image: xcode7.1
-xcode_sdk: iphonesimulator9.0
+matrix:
+  include:
+    - os: linux
+      services: docker
+      sudo: required
+    - os: osx
+      osx_image: xcode7.3
+      sudo: required
 
-script: 'sh scripts/ci.sh'
-
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source scripts/test_swiftyjson_osx.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then source scripts/build_ubuntu_container.sh; fi

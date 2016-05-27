@@ -223,3 +223,20 @@ class SequenceTypeTests: XCTestCase {
         XCTAssertEqual((dictionary["Mix"] as! NSArray)[3] as? Double, 655231.9823)
     }
 }
+
+extension SequenceTypeTests {
+
+    static var allTests: [(String, (SequenceTypeTests) -> () throws -> Void)] {
+        return [("testJSONFile", testJSONFile),
+                ("testArrayAllNumber", testArrayAllNumber),
+                ("testArrayAllBool", testArrayAllBool),
+                ("testArrayAllString", testArrayAllString),
+                ("testArrayWithNull", testArrayWithNull),
+                ("testArrayAllDictionary", testArrayAllDictionary),
+                ("testDictionaryAllNumber", testDictionaryAllNumber),
+                ("testDictionaryAllBool", testDictionaryAllBool),
+                ("testDictionaryAllString", testDictionaryAllString),
+                ("testDictionaryWithNull", testDictionaryWithNull),
+                ("testDictionaryAllArray", testDictionaryAllArray)]
+    }
+}

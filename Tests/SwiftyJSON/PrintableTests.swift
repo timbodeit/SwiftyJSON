@@ -73,3 +73,15 @@ class PrintableTests: XCTestCase {
         XCTAssertTrue(debugDescription.range(of: "\"3\":3", options: .caseInsensitiveSearch) != nil)
     }
 }
+
+extension PrintableTests {
+
+    static var allTests: [(String, (PrintableTests) -> () throws -> Void)] {
+        return [("testNumber", testNumber),
+                ("testBool", testBool),
+                ("testString", testString),
+                ("testNil", testNil),
+                ("testArray", testArray),
+                ("testDictionary", testDictionary)]
+    }
+}

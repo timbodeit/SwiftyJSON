@@ -49,3 +49,12 @@ class StringTests: XCTestCase {
         XCTAssertEqual(json.URL!, NSURL(string: encodedURLString!)!, "Wrong unpacked ")
     }
 }
+
+extension StringTests {
+
+    static var allTests: [(String, (StringTests) -> () throws -> Void)] {
+        return [("testString", testString),
+                ("testURLPercentEscapes", testURLPercentEscapes),
+                ("testURL", testURL)]
+    }
+}

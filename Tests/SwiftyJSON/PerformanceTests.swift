@@ -96,5 +96,15 @@ class PerformanceTests: XCTestCase {
             }
         }
     }
+}
 
+extension PerformanceTests {
+
+    static var allTest: [(String, (PerformanceTests) -> () throws -> Void)] {
+        return [("testInitPerformance", testInitPerformance),
+                ("testObjectMethodPerformance", testObjectMethodPerformance),
+                ("testArrayMethodPerformance", testArrayMethodPerformance),
+                ("testDictionaryMethodPerformance", testDictionaryMethodPerformance),
+                ("testRawStringMethodPerformance", testRawStringMethodPerformance)]
+    }
 }

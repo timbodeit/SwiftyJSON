@@ -269,6 +269,22 @@ class BaseTests: XCTestCase {
         XCTAssertEqual(NSNumber(value: false), NSNumber(value:false))
         XCTAssertEqual(NSNumber(value: true), NSNumber(value:true))
     }
-    
+}
 
+extension BaseTests {
+
+    static var allTests: [(String, (BaseTests) -> () throws -> Void)] {
+        return [("testInit", testInit),
+                ("testCompare", testCompare),
+                ("testJSONDoesProduceValidWithCorrectKeyPath", testJSONDoesProduceValidWithCorrectKeyPath),
+                ("testSequenceType", testSequenceType),
+                ("testJSONNumberCompare", testJSONNumberCompare),
+                ("testNumberConvertToString", testNumberConvertToString),
+                ("testNumberPrint", testNumberPrint),
+                ("testNullJSON", testNullJSON),
+                ("testExistance", testExistance),
+                ("testErrorHandle", testErrorHandle),
+                ("testReturnObject", testReturnObject),
+                ("testNumberCompare", testNumberCompare)]
+    }
 }
