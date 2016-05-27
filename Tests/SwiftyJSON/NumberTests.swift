@@ -397,3 +397,23 @@ class NumberTests: XCTestCase {
         XCTAssertEqual(json.stringValue, "32767")
     }
 }
+
+extension NumberTests {
+
+    static var allTests: [(String, (NumberTests) -> () throws -> Void)] {
+        return [("testNumber", testNumber),
+                ("testBool", testBool),
+                ("testDouble", testDouble),
+                ("testFloat", testFloat),
+                ("testInt", testInt),
+                ("testUInt", testUInt),
+                ("testInt8", testInt8),
+                ("testUInt8", testUInt8),
+                ("testInt16", testInt16),
+                ("testUInt16", testUInt16),
+                ("testInt32", testInt32),
+                ("testUInt32", testUInt32),
+                ("testInt64", testInt64),
+                ("testUInt64", testUInt64)]
+    }
+}

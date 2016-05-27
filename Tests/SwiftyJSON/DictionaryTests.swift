@@ -53,3 +53,11 @@ class DictionaryTests: XCTestCase {
         XCTAssertEqual(json.dictionaryObject! as! [String : String], ["name":"NAME"])
     }
 }
+
+extension DictionaryTests {
+
+    static var allTests: [(String, (DictionaryTests) -> () throws -> Void)] {
+        return [("testGetter", testGetter),
+                ("testSetter", testSetter)]
+    }
+}
