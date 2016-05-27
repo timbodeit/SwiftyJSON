@@ -97,3 +97,17 @@ class RawTests: XCTestCase {
         XCTAssertTrue(json.rawString() == "null")
     }
 }
+
+extension RawTests {
+
+    static var allTests: [(String, (RawTests) -> () throws -> Void)] {
+        return [("testRawData", testRawData),
+                ("testInvalidJSONForRawData", testInvalidJSONForRawData),
+                ("testArray", testArray),
+                ("testDictionary", testDictionary),
+                ("testString", testString),
+                ("testNumber", testNumber),
+                ("testBool", testBool),
+                ("testNull", testNull)]
+    }
+}

@@ -149,3 +149,15 @@ extension RawRepresentableTests {
                 ("testDictionary", testDictionary)]
     }
 }
+
+extension RawRepresentableTests {
+
+    static var allTests: [(String, (RawRepresentableTests) -> () throws -> Void)] {
+        return [("testNumber", testNumber),
+                ("testBool", testBool),
+                ("testString", testString),
+                ("testNil", testNil),
+                ("testArray", testArray),
+                ("testDictionary", testDictionary)]
+    }
+}

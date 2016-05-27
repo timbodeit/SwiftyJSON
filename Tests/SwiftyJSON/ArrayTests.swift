@@ -43,3 +43,11 @@ class ArrayTests: XCTestCase {
         XCTAssertEqual((json.array![1] as JSON).string!, "222")
     }
 }
+
+extension ArrayTests {
+
+    static var allTests: [(String, (ArrayTests) -> () throws -> Void)] {
+        return [("testSingleDimensionalArraysSetter", testSingleDimensionalArraysSetter),
+                ("testSingleDimensionalArraysGetter", testSingleDimensionalArraysGetter)]
+    }
+}

@@ -336,3 +336,30 @@ class ComparableTests: XCTestCase {
         XCTAssertFalse(jsonR1 < ["MNHH":"JUYTR"])
     }
 }
+
+extension ComparableTests {
+
+    static var allTests: [(String, (ComparableTests) -> () throws -> Void)] {
+        return [("testNumberEqual", testNumberEqual),
+                ("testNumberNotEqual", testNumberNotEqual),
+                ("testNumberGreaterThanOrEqual", testNumberGreaterThanOrEqual),
+                ("testNumberLessThanOrEqual", testNumberLessThanOrEqual),
+                ("testNumberGreaterThan", testNumberGreaterThan),
+                ("testNumberLessThan", testNumberLessThan),
+                ("testBoolEqual", testBoolEqual),
+                ("testBoolNotEqual", testBoolNotEqual),
+                ("testBoolGreaterThanOrEqual", testBoolGreaterThanOrEqual),
+                ("testBoolLessThanOrEqual", testBoolLessThanOrEqual),
+                ("testBoolGreaterThan", testBoolGreaterThan),
+                ("testBoolLessThan", testBoolLessThan),
+                ("testStringEqual", testStringEqual),
+                ("testStringNotEqual", testStringNotEqual),
+                ("testStringGreaterThanOrEqual", testStringGreaterThanOrEqual),
+                ("testStringLessThanOrEqual", testStringLessThanOrEqual),
+                ("testStringGreaterThan", testStringGreaterThan),
+                ("testStringLessThan", testStringLessThan),
+                ("testNil", testNil),
+                ("testArray", testArray),
+                ("testDictionary", testDictionary)]
+    }
+}
